@@ -114,6 +114,9 @@ header {
   text-transform: uppercase;
   cursor: pointer;
 }
+.button.is-active {
+  background-color: lightgreen;
+}
 
 .print {
   display: flex;
