@@ -175,3 +175,9 @@ function drawShape(x, y, size, isFilled) {
     ); // Dreieck zeichnen
   }
 }
+
+// save canvas
+const saveBtn = document.getElementById('print-btn');
+saveBtn.addEventListener('click', function () {
+  saveCanvas('highResArtwork', 'png');
+});
