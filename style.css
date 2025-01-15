@@ -1,0 +1,142 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Neue Haas Grotesk Display Pro';
+  font-weight: 350;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 25px; /* 166.667% */
+  letter-spacing: 1.591px;
+}
+
+p,
+input[type='range'] {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#tool-layout {
+  display: grid;
+  grid-template-columns: 36% 1fr;
+  height: 100vh;
+}
+
+#artboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#gui-left {
+  background: #f1f1f1;
+  padding: 40px;
+  max-width: 500px;
+  min-width: 355px;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 15px;
+  font-weight: 450;
+  line-height: 17px;
+  letter-spacing: 1.59px;
+}
+a {
+  text-decoration-color: black;
+  color: black;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+a:hover {
+  text-decoration: unset;
+}
+
+header {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  font-weight: 450;
+  line-height: 50px; /* 166.667% */
+  letter-spacing: 1.591px;
+  text-transform: uppercase;
+  margin-top: 61px;
+  margin-bottom: 27px;
+}
+
+.control {
+  margin-bottom: 21px;
+}
+.control-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.control-name,
+.control-value {
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: 'Neue Haas Grotesk Display Pro';
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 25px; /* 166.667% */
+  letter-spacing: 1.591px;
+  text-transform: uppercase;
+}
+.control-name {
+}
+.control-value {
+}
+.control-range {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.button {
+  padding: 10px 13px;
+  border: 1px solid black;
+  width: max-content;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 13px; /* 108.333% */
+  letter-spacing: 1.591px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.print {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 40px;
+}
+.print-button {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+.print-ext {
+}
+
+.control-range {
+  height: 20px;
+  width: 100%;
+  border: 1px solid black;
+  position: relative;
+}
+.control-range-bar {
+  background: black;
+  height: 100%;
+  width: 50%;
+  position: absolute;
+}
