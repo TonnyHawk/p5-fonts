@@ -14,6 +14,7 @@ body {
 p,
 input[type='range'] {
   margin: 0;
+  width: 100%;
 }
 
 * {
@@ -23,13 +24,15 @@ input[type='range'] {
 #tool-layout {
   display: grid;
   grid-template-columns: 36% 1fr;
-  height: 100vh;
+  min-height: 100vh;
+  display: flex;
 }
 
 #artboard {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-grow: 3;
 }
 
 #gui-left {
@@ -37,6 +40,7 @@ input[type='range'] {
   padding: 40px;
   max-width: 500px;
   min-width: 355px;
+  flex-grow: 1;
 }
 
 .description {
@@ -92,6 +96,7 @@ header {
 .control-name {
 }
 .control-value {
+  width: max-content;
 }
 .control-range {
   width: 100%;
