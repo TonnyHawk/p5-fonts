@@ -66,7 +66,6 @@ function draw() {
   background(backgroundColor);
   noStroke();
   fill(255);
-  rect(0, 0, width, 120);
 
   // Werte von den Reglern auslesen
   grid_space = gridSizeSlider.value;
