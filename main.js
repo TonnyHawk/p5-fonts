@@ -12,9 +12,6 @@ const gridShapeSlider = document.getElementById('cornersCount');
 const gridSizeSlider = document.getElementById('gridSize');
 const pixelSizeSlider = document.getElementById('pixelSize');
 const innerRadiusSlider = document.getElementById('innerRadius');
-let backgroundColorButton = document.querySelector(
-  '#background-buttons .button.is-active'
-);
 
 // Standardform
 let currentShape = 'rectangle'; // Standardmäßig Rechteck
@@ -31,15 +28,20 @@ function getCanvasAdaptiveWidth() {
   return width;
 }
 
+function readColor(groupIdSelector, defaultColor) {
+  const activeButton = document.querySelector(
+    `#${groupIdSelector} .button.is-active`
+  );
+  return activeButton ? activeButton.dataset.color : defaultColor;
+}
+
 let gridData;
 
 function setup() {
   const width = getCanvasAdaptiveWidth();
   const c = createCanvas(width, width);
   c.parent('sketch-wrapper');
-  backgroundColor = backgroundColorButton
-    ? backgroundColorButton.dataset.color
-    : 'white';
+  backgroundColor = readColor('background-buttons', 'white');
   background(backgroundColor);
 
   cols = floor(width / grid_space); // Anzahl der Spalten
@@ -49,19 +51,17 @@ function setup() {
   textFont('Helvetica'); // Setzen der Standard-Schriftart
   textSize(200); // Schriftgröße für den Text
 
+  fill('red');
+
   points = getLetterPoints();
 
   //   createSlidersOnCanvas(); // Regler erstellen und auf Canvas anordnen
 }
 
 function draw() {
-  backgroundColorButton = document.querySelector(
-    '#background-buttons .button.is-active'
-  );
+  backgroundColor = readColor('background-buttons', 'white');
+  textColor = readColor('color-buttons', 'black');
   letter = document.getElementById('display-text').value;
-  const backgroundColor = backgroundColorButton
-    ? backgroundColorButton.dataset.color
-    : 'white';
 
   background(backgroundColor);
   noStroke();
@@ -82,7 +82,7 @@ function draw() {
 
   // Buchstabenpunkte aktualisieren
   points = getLetterPoints();
-
+  stroke(textColor);
   drawGrid(innerRadius, isFilled, pixelSize, numCorners);
 }
 
@@ -102,7 +102,7 @@ function initializeGrid(cols, rows) {
 
 // Buchstabenpunkte extrahieren
 function getLetterPoints(density = 0.2) {
-  return dm.textToPoints(letter, width / 2, height / 2 + 100, fontSize, {
+  return dm.textToPoints(letter, 20, 10, fontSize, {
     sampleFactor: density, // Steuerung der Punktdichte
     simplifyThreshold: 0, // Keine Vereinfachung
   });
@@ -140,7 +140,6 @@ function drawStar(x, y, npoints, outerRadius, innerRadius, isFilled) {
     noStroke();
   } else {
     noFill();
-    stroke(0);
   }
 
   beginShape();
@@ -166,7 +165,6 @@ function drawShape(x, y, size, isFilled) {
     fill(0);
   } else {
     noFill();
-    stroke(0);
   }
 
   // Je nach Auswahl, eine andere Form zeichnen

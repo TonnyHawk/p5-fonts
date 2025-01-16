@@ -39,17 +39,19 @@
   });
 
   // background color buttons
-  const backgroundBtns = document.getElementById('background-buttons');
-  const buttons = backgroundBtns.querySelectorAll('.button');
-  buttons.forEach((button) => {
-    button.addEventListener('click', function () {
-      const color = this.dataset.color;
-      buttons.forEach((btn) => {
-        btn.classList.remove('is-active');
-        btn.style.removeProperty('background');
+  const backgroundBtns = document.querySelectorAll('.buttons');
+  backgroundBtns.forEach((group) => {
+    const buttons = group.querySelectorAll('.button');
+    buttons.forEach((button) => {
+      button.addEventListener('click', function () {
+        const color = this.dataset.color;
+        buttons.forEach((btn) => {
+          btn.classList.remove('is-active');
+          btn.style.removeProperty('background');
+        });
+        this.style.background = color;
+        this.classList.add('is-active');
       });
-      this.style.background = color;
-      this.classList.add('is-active');
     });
   });
 
