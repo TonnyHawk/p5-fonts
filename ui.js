@@ -52,4 +52,12 @@
       this.classList.add('is-active');
     });
   });
+
+  function placeTheBoard() {
+    const board = document.querySelector('#artboard');
+    const boardPlaceholder = document.querySelector('#artboard-placeholder');
+    board.style.width = boardPlaceholder.clientWidth + 'px';
+  }
+  placeTheBoard();
+  window.addEventListener('resize', placeTheBoard);
 })();

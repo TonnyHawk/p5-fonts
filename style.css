@@ -28,11 +28,18 @@ input[type='range'] {
   display: flex;
 }
 
+#artboard-placeholder {
+  width: 100%;
+}
 #artboard {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-grow: 3;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 
 #gui-left {

@@ -12,9 +12,9 @@ const gridShapeSlider = document.getElementById('cornersCount');
 const gridSizeSlider = document.getElementById('gridSize');
 const pixelSizeSlider = document.getElementById('pixelSize');
 const innerRadiusSlider = document.getElementById('innerRadius');
-let backgroundColorButton = document.getElementById('background-buttons');
-const backgroundBtn =
-  backgroundColorButton.querySelector('.button.is-active')?.dataset.color;
+let backgroundColorButton = document.querySelector(
+  '#background-buttons .button.is-active'
+);
 
 // Standardform
 let currentShape = 'rectangle'; // Standardmäßig Rechteck
@@ -23,17 +23,23 @@ function preload() {
   dm = loadFont('/fonts/EdwardianScriptITC.ttf'); // Schriftart laden
 }
 
-let sizeMult = 1.3;
-let maxHeight = window.innerHeight * 0.9;
-let width = 0.9 * artboard.clientWidth;
-if (width > maxHeight) width = maxHeight;
+function getCanvasAdaptiveWidth() {
+  let sizeMult = 1.3;
+  let maxHeight = windowHeight * 0.9;
+  let width = 0.9 * artboard.clientWidth;
+  if (width > maxHeight) width = maxHeight;
+  return width;
+}
 
 let gridData;
 
 function setup() {
+  const width = getCanvasAdaptiveWidth();
   const c = createCanvas(width, width);
   c.parent('sketch-wrapper');
-  backgroundColor = backgroundBtn ? backgroundBtn.dataset.color : 'white';
+  backgroundColor = backgroundColorButton
+    ? backgroundColorButton.dataset.color
+    : 'white';
   background(backgroundColor);
 
   cols = floor(width / grid_space); // Anzahl der Spalten
@@ -49,11 +55,13 @@ function setup() {
 }
 
 function draw() {
+  backgroundColorButton = document.querySelector(
+    '#background-buttons .button.is-active'
+  );
   letter = document.getElementById('display-text').value;
-  // Hintergrund und Reglerbereich zurücksetzen
-  //   const backgroundBtn =
-  //     backgroundColorButton.querySelector('.button.is-active')?.dataset.color;
-  //   backgroundColor = backgroundBtn ? backgroundBtn.dataset.color : 'white';
+  const backgroundColor = backgroundColorButton
+    ? backgroundColorButton.dataset.color
+    : 'white';
 
   background(backgroundColor);
   noStroke();
@@ -76,6 +84,11 @@ function draw() {
   points = getLetterPoints();
 
   drawGrid(innerRadius, isFilled, pixelSize, numCorners);
+}
+
+function windowResized() {
+  const width = getCanvasAdaptiveWidth();
+  resizeCanvas(width, width); // Adjust canvas size dynamically
 }
 
 // Raster initialisieren
