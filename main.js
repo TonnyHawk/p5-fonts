@@ -19,9 +19,6 @@ const backgroundBtn =
 // Standardform
 let currentShape = 'rectangle'; // Standardmäßig Rechteck
 
-// Text für die Anzeige
-let displayText = 'JOONE DANKOU'; // Der Text, der oben links angezeigt wird
-
 function preload() {
   dm = loadFont('/fonts/EdwardianScriptITC.ttf'); // Schriftart laden
 }
@@ -52,6 +49,7 @@ function setup() {
 }
 
 function draw() {
+  letter = document.getElementById('display-text').value;
   // Hintergrund und Reglerbereich zurücksetzen
   //   const backgroundBtn =
   //     backgroundColorButton.querySelector('.button.is-active')?.dataset.color;
