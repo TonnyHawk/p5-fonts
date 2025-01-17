@@ -54,8 +54,6 @@ function setup() {
   fill('red');
 
   points = getLetterPoints();
-
-  //   createSlidersOnCanvas(); // Regler erstellen und auf Canvas anordnen
 }
 
 function draw() {
@@ -72,7 +70,6 @@ function draw() {
   let innerRadius = innerRadiusSlider.value;
   let pixelSize = pixelSizeSlider.value;
   let numCorners = gridShapeSlider.value;
-  // let isFilled = fillToggle.checked();
   let isFilled = false;
 
   cols = floor(width / grid_space);
@@ -101,17 +98,46 @@ function initializeGrid(cols, rows) {
 
 // Buchstabenpunkte extrahieren
 function getLetterPoints(density = 0.2) {
-  return dm.textToPoints(letter, 20, 10, fontSize, {
+  return dm.textToPoints(letter, 0, 0, fontSize, {
     sampleFactor: density, // Steuerung der Punktdichte
     simplifyThreshold: 0, // Keine Vereinfachung
   });
 }
 
+// Function to get bounding box of points
+function getBounds(points) {
+  let minX = min(points.map((p) => p.x));
+  let minY = min(points.map((p) => p.y));
+  let maxX = max(points.map((p) => p.x));
+  let maxY = max(points.map((p) => p.y));
+
+  return {
+    x: minX,
+    y: minY,
+    w: maxX - minX,
+    h: maxY - minY,
+  };
+}
+
 // Raster zeichnen
 function drawGrid(innerRadius, isFilled, pixelSize, numCorners) {
+  // Calculate bounding box
+  let bounds = getBounds(points);
+
+  // Calculate the center offset
+  console.log(width);
+  console.log(height);
+
+  let centerX = width / 2 - bounds.w / 2;
+  let centerY = height / 2 - bounds.h / 2; // +bounds.h/2 because text y grows downward
+
+  // Adjust points to be centered
   for (let p of points) {
-    let col = floor(p.x / grid_space); // Spalte basierend auf Rastergröße
-    let row = floor(p.y / grid_space); // Reihe basierend auf Rastergröße
+    let adjustedX = p.x + centerX - bounds.x;
+    let adjustedY = p.y + centerY - bounds.y;
+
+    let col = floor(adjustedX / grid_space); // Spalte basierend auf Rastergröße
+    let row = floor(adjustedY / grid_space); // Reihe basierend auf Rastergröße
 
     if (col >= 0 && col < cols && row >= 0 && row < rows) {
       let xPos = col * grid_space + grid_space / 2;
@@ -166,7 +192,6 @@ function drawShape(x, y, size, isFilled) {
     noFill();
   }
 
-  // Je nach Auswahl, eine andere Form zeichnen
   if (currentShape === 'rectangle') {
     rectMode(CENTER);
     rect(x, y, size, size); // Rechteck zeichnen
@@ -184,7 +209,7 @@ function drawShape(x, y, size, isFilled) {
   }
 }
 
-// save canvas
+// Save canvas
 const saveBtn = document.getElementById('print-btn');
 saveBtn.addEventListener('click', function () {
   saveCanvas('highResArtwork', 'png');
