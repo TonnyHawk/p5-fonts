@@ -5,6 +5,7 @@ let dm; // Schriftart
 let points; // Punkte des Buchstabens
 let fontSize = 200; // Schriftgröße
 let letter = 'JO'; // Buchstabe, der gezeichnet werden soll
+const defaultBackground = '#E84E26';
 
 // Regler
 let fillToggle;
@@ -41,7 +42,7 @@ function setup() {
   const width = getCanvasAdaptiveWidth();
   const c = createCanvas(width, width);
   c.parent('sketch-wrapper');
-  backgroundColor = readColor('background-buttons', 'white');
+  backgroundColor = readColor('background-buttons', defaultBackground);
   background(backgroundColor);
 
   cols = floor(width / grid_space); // Anzahl der Spalten
@@ -56,8 +57,27 @@ function setup() {
   points = getLetterPoints();
 }
 
+// Function to draw visible grid lines
+function drawGridCellBorders(gridSpace) {
+  stroke(200); // Set cell border color (light gray)
+  strokeWeight(1); // Border thickness
+  noFill(); // Ensure the cells are not filled
+  for (let col = 0; col < cols; col++) {
+    for (let row = 0; row < rows; row++) {
+      // Calculate the top-left corner of each cell
+      let x = col * gridSpace;
+      let y = row * gridSpace;
+
+      // Draw a rectangle for the cell
+      rect(x, y, gridSpace, gridSpace);
+    }
+  }
+}
+
+let textColor;
+
 function draw() {
-  backgroundColor = readColor('background-buttons', 'white');
+  backgroundColor = readColor('background-buttons', defaultBackground);
   textColor = readColor('color-buttons', 'black');
   letter = document.getElementById('display-text').value;
 
@@ -78,8 +98,10 @@ function draw() {
 
   // Buchstabenpunkte aktualisieren
   points = getLetterPoints();
-  stroke(textColor);
+  // points = points.slice(0, 4);
+
   drawGrid(innerRadius, isFilled, pixelSize, numCorners);
+  drawGridCellBorders(grid_space);
 }
 
 function windowResized() {
@@ -97,7 +119,7 @@ function initializeGrid(cols, rows) {
 }
 
 // Buchstabenpunkte extrahieren
-function getLetterPoints(density = 0.2) {
+function getLetterPoints(density = 0.05) {
   return dm.textToPoints(letter, 0, 0, fontSize, {
     sampleFactor: density, // Steuerung der Punktdichte
     simplifyThreshold: 0, // Keine Vereinfachung
@@ -125,14 +147,12 @@ function drawGrid(innerRadius, isFilled, pixelSize, numCorners) {
   let bounds = getBounds(points);
 
   // Calculate the center offset
-  console.log(width);
-  console.log(height);
-
   let centerX = width / 2 - bounds.w / 2;
   let centerY = height / 2 - bounds.h / 2; // +bounds.h/2 because text y grows downward
 
   // Adjust points to be centered
-  for (let p of points) {
+  let counter = 0;
+  points.forEach((p, index) => {
     let adjustedX = p.x + centerX - bounds.x;
     let adjustedY = p.y + centerY - bounds.y;
 
@@ -140,6 +160,14 @@ function drawGrid(innerRadius, isFilled, pixelSize, numCorners) {
     let row = floor(adjustedY / grid_space); // Reihe basierend auf Rastergröße
 
     if (col >= 0 && col < cols && row >= 0 && row < rows) {
+      stroke('white');
+      if (counter % 2 !== 0) {
+        fill('red');
+      } else {
+        fill(textColor);
+      }
+      counter += 1;
+      // Setting color of the figure
       let xPos = col * grid_space + grid_space / 2;
       let yPos = row * grid_space + grid_space / 2;
 
@@ -152,20 +180,13 @@ function drawGrid(innerRadius, isFilled, pixelSize, numCorners) {
       }
       pop(); // Grafikzustand wiederherstellen
     }
-  }
+  });
 }
 
 // Stern zeichnen
 function drawStar(x, y, npoints, outerRadius, innerRadius, isFilled) {
   let angle = TWO_PI / npoints;
   let halfAngle = angle / 2.0;
-
-  if (isFilled) {
-    fill(0);
-    noStroke();
-  } else {
-    noFill();
-  }
 
   beginShape();
   for (let i = 0; i < TWO_PI; i += angle) {
@@ -185,13 +206,6 @@ function drawStar(x, y, npoints, outerRadius, innerRadius, isFilled) {
 
 // Rechteck, Kreis oder Dreieck zeichnen
 function drawShape(x, y, size, isFilled) {
-  if (isFilled) {
-    noStroke();
-    fill(0);
-  } else {
-    noFill();
-  }
-
   if (currentShape === 'rectangle') {
     rectMode(CENTER);
     rect(x, y, size, size); // Rechteck zeichnen
