@@ -74,11 +74,12 @@ function drawGridCellBorders(gridSpace) {
   }
 }
 
-let textColor;
+let textColor1, textColor2;
 
 function draw() {
   backgroundColor = readColor('background-buttons', defaultBackground);
-  textColor = readColor('color-buttons', 'black');
+  textColor1 = readColor('color-buttons-1', 'black');
+  textColor2 = readColor('color-buttons-2', 'red');
   letter = document.getElementById('display-text').value;
 
   background(backgroundColor);
@@ -162,9 +163,9 @@ function drawGrid(innerRadius, isFilled, pixelSize, numCorners) {
     if (col >= 0 && col < cols && row >= 0 && row < rows) {
       stroke('white');
       if (counter % 2 !== 0) {
-        fill('red');
+        fill(textColor2);
       } else {
-        fill(textColor);
+        fill(textColor1);
       }
       counter += 1;
       // Setting color of the figure
