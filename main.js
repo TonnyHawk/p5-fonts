@@ -5,10 +5,10 @@ let dm; // Schriftart
 let points; // Punkte des Buchstabens
 let fontSize = 200; // Schriftgröße
 let letter = 'JO'; // Buchstabe, der gezeichnet werden soll
-const defaultBackground = '#E84E26';
+const defaultBackground = '#849495';
 
 // Regler
-let fillToggle;
+let fillToggle, showGrid;
 const gridShapeSlider = document.getElementById('cornersCount');
 const gridSizeSlider = document.getElementById('gridSize');
 const pixelSizeSlider = document.getElementById('pixelSize');
@@ -87,6 +87,7 @@ function draw() {
   textColor2 = readColor('color-buttons-2', 'red');
   fillToggle = readSwitch('fill');
   letter = document.getElementById('display-text').value;
+  showGrid = readSwitch('show-grid');
 
   background(backgroundColor);
   noStroke();
@@ -108,7 +109,7 @@ function draw() {
   // points = points.slice(0, 4);
 
   drawGrid(innerRadius, isFilled, pixelSize, numCorners);
-  drawGridCellBorders(grid_space);
+  if (showGrid) drawGridCellBorders(grid_space);
 }
 
 function windowResized() {
