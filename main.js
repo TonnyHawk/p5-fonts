@@ -8,7 +8,7 @@ let letter = 'JO'; // Buchstabe, der gezeichnet werden soll
 const defaultBackground = '#849495';
 
 // Regler
-let fillToggle, showGrid;
+let fillToggle, showGrid, outline;
 const gridShapeSlider = document.getElementById('cornersCount');
 const gridSizeSlider = document.getElementById('gridSize');
 const pixelSizeSlider = document.getElementById('pixelSize');
@@ -88,6 +88,7 @@ function draw() {
   fillToggle = readSwitch('fill');
   letter = document.getElementById('display-text').value;
   showGrid = readSwitch('show-grid');
+  outline = readSwitch('outline');
 
   background(backgroundColor);
   noStroke();
@@ -169,7 +170,7 @@ function drawGrid(innerRadius, isFilled, pixelSize, numCorners) {
 
     if (col >= 0 && col < cols && row >= 0 && row < rows) {
       if (fillToggle) {
-        stroke('white');
+        if (outline) stroke('white');
         if (counter % 2 !== 0) {
           fill(textColor2);
         } else {
