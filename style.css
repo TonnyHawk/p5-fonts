@@ -160,3 +160,35 @@ a:hover {
   border: none;
   border-bottom: 1px solid black;
 }
+
+.switch {
+  position: relative;
+  height: 20px;
+  width: 100%;
+  border: 1px solid black;
+  cursor: pointer;
+}
+.switch::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-right: 1px solid;
+  background-color: black;
+}
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+}
+.switch.is-active::before {
+  background: transparent;
+}
+.switch.is-active::after {
+  background-color: black;
+}

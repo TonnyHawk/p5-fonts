@@ -64,6 +64,17 @@
     });
   });
 
+  const switches = document.querySelectorAll('.switch');
+  switches.forEach((el) => {
+    el.addEventListener('click', function () {
+      this.classList.toggle('is-active');
+      const display = this.parentElement.querySelector('.control-name span');
+      display.textContent = Array.from(this.classList).includes('is-active')
+        ? 'On'
+        : 'Off';
+    });
+  });
+
   function placeTheBoard() {
     const board = document.querySelector('#artboard');
     const boardPlaceholder = document.querySelector('#artboard-placeholder');

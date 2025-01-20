@@ -35,6 +35,11 @@ function readColor(groupIdSelector, defaultColor) {
   );
   return activeButton ? activeButton.dataset.color : defaultColor;
 }
+function readSwitch(switchId) {
+  return Array.from(document.getElementById(switchId).classList).includes(
+    'is-active'
+  );
+}
 
 let gridData;
 
@@ -52,7 +57,7 @@ function setup() {
   textFont('Helvetica'); // Setzen der Standard-Schriftart
   textSize(200); // Schriftgröße für den Text
 
-  fill('red');
+  // fill(fillToggle);
 
   points = getLetterPoints();
 }
@@ -80,6 +85,7 @@ function draw() {
   backgroundColor = readColor('background-buttons', defaultBackground);
   textColor1 = readColor('color-buttons-1', 'black');
   textColor2 = readColor('color-buttons-2', 'red');
+  fillToggle = readSwitch('fill');
   letter = document.getElementById('display-text').value;
 
   background(backgroundColor);
@@ -161,12 +167,22 @@ function drawGrid(innerRadius, isFilled, pixelSize, numCorners) {
     let row = floor(adjustedY / grid_space); // Reihe basierend auf Rastergröße
 
     if (col >= 0 && col < cols && row >= 0 && row < rows) {
-      stroke('white');
-      if (counter % 2 !== 0) {
-        fill(textColor2);
+      if (fillToggle) {
+        stroke('white');
+        if (counter % 2 !== 0) {
+          fill(textColor2);
+        } else {
+          fill(textColor1);
+        }
       } else {
-        fill(textColor1);
+        noFill();
+        if (counter % 2 !== 0) {
+          stroke(textColor2);
+        } else {
+          stroke(textColor1);
+        }
       }
+
       counter += 1;
       // Setting color of the figure
       let xPos = col * grid_space + grid_space / 2;
