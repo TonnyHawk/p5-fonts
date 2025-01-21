@@ -8,7 +8,7 @@
     <div id="gui-left">
       <div class="description">
         <p>
-          The >>Yom-Tool<< is an interactive, generative type tool designed to
+          The >>YOM-Type<< is an interactive, generative type tool designed to
           visualize your health data in a truly unique way. By analyzing your
           personal health metrics, the tool creates a personalized typographic
           representation of your health status using your initials.This
@@ -17,7 +17,7 @@
           needs. Your personalized initials, reflecting your health data, are
           printed in real time on your lunch packaging, making your meal not
           only functional but also uniquely yours. Experience how your health
-          comes to life with the &lt;&lt;Yom-Tool&gt;&gt;
+          comes to life with the &lt;&lt;YOM-Type&gt;&gt;
         </p>
         <p>Visit the <a href="">YOM Website</a></p>
       </div>
@@ -30,6 +30,16 @@
         id="display-text"
         maxlength="2"
       />
+      <div class="control">
+        <div class="control-header">
+          <p class="control-name">Font size</p>
+          <p class="control-value">50%</p>
+        </div>
+        <!-- <div class="control-range">
+          <div class="control-range-bar"></div>
+        </div> -->
+        <input type="range" min="200" max="240" step="1" id="fontSize" />
+      </div>
       <div class="control">
         <div class="control-header">
           <p class="control-name">Count</p>
@@ -89,18 +99,6 @@
         <div class="buttons" id="color-buttons-1">
           <p class="button" data-color="#000000">Farbe 1</p>
           <p class="button" data-color="#ED6D35">Farbe 2</p>
-          <p class="button" data-color="#2060AA">Farbe 3</p>
-          <p class="button" data-color="#6B544F">Farbe 4</p>
-          <p class="button" data-color="#BDABCA">Farbe 5</p>
-        </div>
-      </div>
-      <div class="control">
-        <div class="control-header">
-          <p class="control-name">Color 2</p>
-        </div>
-        <div class="buttons" id="color-buttons-2">
-          <p class="button" data-color="#000000">Farbe 1</p>
-          <p class="button is-active" data-color="#D9D9D9">Farbe 2</p>
           <p class="button" data-color="#2060AA">Farbe 3</p>
           <p class="button" data-color="#6B544F">Farbe 4</p>
           <p class="button" data-color="#BDABCA">Farbe 5</p>

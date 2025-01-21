@@ -84,11 +84,12 @@ let textColor1, textColor2;
 function draw() {
   backgroundColor = readColor('background-buttons', defaultBackground);
   textColor1 = readColor('color-buttons-1', 'black');
-  textColor2 = readColor('color-buttons-2', 'red');
+  textColor2 = '#D9D9D9';
   fillToggle = readSwitch('fill');
   letter = document.getElementById('display-text').value;
   showGrid = readSwitch('show-grid');
   outline = readSwitch('outline');
+  fontSize = document.getElementById('fontSize').value;
 
   background(backgroundColor);
   noStroke();
