@@ -50,33 +50,10 @@ function setup() {
   backgroundColor = readColor('background-buttons', defaultBackground);
   background(backgroundColor);
 
-  cols = floor(width / grid_space); // Anzahl der Spalten
-  rows = floor(height / grid_space); // Anzahl der Reihen
-  grid = initializeGrid(cols, rows);
-
   textFont('Helvetica'); // Setzen der Standard-Schriftart
   textSize(200); // Schriftgröße für den Text
 
-  // fill(fillToggle);
-
-  points = getLetterPoints();
-}
-
-// Function to draw visible grid lines
-function drawGridCellBorders(gridSpace) {
-  stroke(200); // Set cell border color (light gray)
-  strokeWeight(1); // Border thickness
-  noFill(); // Ensure the cells are not filled
-  for (let col = 0; col < cols; col++) {
-    for (let row = 0; row < rows; row++) {
-      // Calculate the top-left corner of each cell
-      let x = col * gridSpace;
-      let y = row * gridSpace;
-
-      // Draw a rectangle for the cell
-      rect(x, y, gridSpace, gridSpace);
-    }
-  }
+  points = getLetterPoints(0.05 / grid_space);
 }
 
 let textColor1, textColor2;
@@ -103,16 +80,11 @@ function draw() {
   let numCorners = gridShapeSlider.value;
   let isFilled = false;
 
-  cols = floor(width / grid_space);
-  rows = floor(height / grid_space);
-  grid = initializeGrid(cols, rows);
-
   // Buchstabenpunkte aktualisieren
   points = getLetterPoints();
   // points = points.slice(0, 4);
 
   drawGrid(innerRadius, isFilled, pixelSize, numCorners);
-  if (showGrid) drawGridCellBorders(grid_space);
 }
 
 function windowResized() {
@@ -132,7 +104,7 @@ function initializeGrid(cols, rows) {
 // Buchstabenpunkte extrahieren
 function getLetterPoints(density = 0.05) {
   return dm.textToPoints(letter, 0, 0, fontSize, {
-    sampleFactor: density, // Steuerung der Punktdichte
+    sampleFactor: 0.05, // Steuerung der Punktdichte
     simplifyThreshold: 0, // Keine Vereinfachung
   });
 }
@@ -156,51 +128,52 @@ function getBounds(points) {
 function drawGrid(innerRadius, isFilled, pixelSize, numCorners) {
   // Calculate bounding box
   let bounds = getBounds(points);
+  const spacingMultiplier = grid_space;
+
+  let scaledBounds = {
+    x: bounds.x * spacingMultiplier,
+    y: bounds.y * spacingMultiplier,
+    w: bounds.w * spacingMultiplier,
+    h: bounds.h * spacingMultiplier,
+  };
 
   // Calculate the center offset
-  let centerX = width / 2 - bounds.w / 2;
-  let centerY = height / 2 - bounds.h / 2; // +bounds.h/2 because text y grows downward
+  let centerX = width / 2 - scaledBounds.w / 2;
+  let centerY = height / 2 - scaledBounds.h / 2; // +bounds.h/2 because text y grows downward
 
   // Adjust points to be centered
-  let counter = 0;
   points.forEach((p, index) => {
-    let adjustedX = p.x + centerX - bounds.x;
-    let adjustedY = p.y + centerY - bounds.y;
+    let adjustedX = centerX + (p.x - bounds.x) * spacingMultiplier;
+    let adjustedY = centerY + (p.y - bounds.y) * spacingMultiplier;
 
-    let col = floor(adjustedX / grid_space); // Spalte basierend auf Rastergröße
-    let row = floor(adjustedY / grid_space); // Reihe basierend auf Rastergröße
-
-    if (col >= 0 && col < cols && row >= 0 && row < rows) {
-      if (fillToggle) {
-        if (outline) stroke('white');
-        if (counter % 2 !== 0) {
-          fill(textColor2);
-        } else {
-          fill(textColor1);
-        }
+    // if (col >= 0 && col < cols && row >= 0 && row < rows) {
+    if (fillToggle) {
+      if (outline) stroke('white');
+      if (index % 2 !== 0) {
+        fill(textColor2);
       } else {
-        noFill();
-        if (counter % 2 !== 0) {
-          stroke(textColor2);
-        } else {
-          stroke(textColor1);
-        }
+        fill(textColor1);
       }
-
-      counter += 1;
-      // Setting color of the figure
-      let xPos = col * grid_space + grid_space / 2;
-      let yPos = row * grid_space + grid_space / 2;
-
-      push(); // Grafikzustand speichern
-      // Stern oder Rechteck/Circle/Triangle zeichnen
-      if (numCorners > 2) {
-        drawStar(xPos, yPos, numCorners, pixelSize, innerRadius, isFilled);
+    } else {
+      noFill();
+      if (index % 2 !== 0) {
+        stroke(textColor2);
       } else {
-        drawShape(xPos, yPos, pixelSize, isFilled); // Pixel Size hier!
+        stroke(textColor1);
       }
-      pop(); // Grafikzustand wiederherstellen
     }
+    // Setting color of the figure
+    let xPos = adjustedX;
+    let yPos = adjustedY;
+
+    push(); // Grafikzustand speichern
+    // Stern oder Rechteck/Circle/Triangle zeichnen
+    if (numCorners > 2) {
+      drawStar(xPos, yPos, numCorners, pixelSize, innerRadius, isFilled);
+    } else {
+      drawShape(xPos, yPos, pixelSize, isFilled); // Pixel Size hier!
+    }
+    pop(); // Grafikzustand wiederherstellen
   });
 }
 
