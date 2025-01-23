@@ -89,7 +89,8 @@ function draw() {
   letter = document.getElementById('display-text').value;
   showGrid = readSwitch('show-grid');
   outline = readSwitch('outline');
-  fontSize = document.getElementById('fontSize').value;
+  const text = document.getElementById('display-text').value;
+  fontSize = text.length == 2 ? 260 : 450;
 
   background(backgroundColor);
   noStroke();
