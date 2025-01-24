@@ -104,8 +104,7 @@ function draw() {
   backgroundColor = readColor('background-buttons', defaultBackground);
   textColor1 = readColor('color-buttons-1', 'black');
   textColor2 = '#D9D9D9';
-  fillValue = document.getElementById('fill').value;
-  fillToggle = true;
+  fillToggle = document.getElementById('fill').value > 50;
   letter = document.getElementById('display-text').value;
   showGrid = readSwitch('show-grid');
   outline = readSwitch('outline');
