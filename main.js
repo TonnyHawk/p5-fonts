@@ -41,7 +41,47 @@ function readSwitch(switchId) {
   );
 }
 
-let gridData;
+function filterClosePoints(points, minDistance) {
+  let filteredPoints = []; // Array to store filtered points
+
+  for (let i = 0; i < points.length; i++) {
+    let keepPoint = true;
+
+    for (let j = 0; j < filteredPoints.length; j++) {
+      // Check distance to all previously added points
+      if (dist(points[i], filteredPoints[j]) < minDistance) {
+        keepPoint = false; // Skip this point
+        break;
+      }
+    }
+
+    if (keepPoint) {
+      filteredPoints.push(points[i]); // Add the point to the result array
+    }
+  }
+
+  return filteredPoints;
+}
+
+function findMinimalDistance(points) {
+  let minDistance = Infinity;
+
+  for (let i = 0; i < points.length; i++) {
+    for (let j = i + 1; j < points.length; j++) {
+      // Calculate the distance between point i and point j
+      let distance = dist(points[i].x, points[i].y, points[j].x, points[j].y);
+
+      // Update minDistance if a smaller distance is found
+      if (distance < minDistance) {
+        minDistance = distance;
+      }
+    }
+  }
+
+  return minDistance;
+}
+
+let gridData, minPointsDistance;
 
 function setup() {
   const width = getCanvasAdaptiveWidth();
@@ -54,15 +94,18 @@ function setup() {
   textSize(200); // Schriftgröße für den Text
 
   points = getLetterPoints(0.05 / grid_space);
+  minPointsDistance = findMinimalDistance(points);
+  console.log(minPointsDistance);
 }
 
-let textColor1, textColor2;
+let textColor1, textColor2, fillValue;
 
 function draw() {
   backgroundColor = readColor('background-buttons', defaultBackground);
   textColor1 = readColor('color-buttons-1', 'black');
   textColor2 = '#D9D9D9';
-  fillToggle = readSwitch('fill');
+  fillValue = document.getElementById('fill').value;
+  fillToggle = true;
   letter = document.getElementById('display-text').value;
   showGrid = readSwitch('show-grid');
   outline = readSwitch('outline');
@@ -82,6 +125,7 @@ function draw() {
 
   // Buchstabenpunkte aktualisieren
   points = getLetterPoints();
+  points = filterClosePoints(points);
   // points = points.slice(0, 4);
 
   drawGrid(innerRadius, isFilled, pixelSize, numCorners);
