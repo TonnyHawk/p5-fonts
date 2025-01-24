@@ -8,7 +8,7 @@ let letter = 'JO'; // Buchstabe, der gezeichnet werden soll
 const defaultBackground = '#849495';
 
 // Regler
-let fillToggle, showGrid, outline;
+let fillToggle, outline, monotone;
 const gridShapeSlider = document.getElementById('cornersCount');
 const gridSizeSlider = document.getElementById('gridSize');
 const pixelSizeSlider = document.getElementById('pixelSize');
@@ -103,10 +103,9 @@ let textColor1, textColor2, fillValue;
 function draw() {
   backgroundColor = readColor('background-buttons', defaultBackground);
   textColor1 = readColor('color-buttons-1', 'black');
-  textColor2 = '#D9D9D9';
+  textColor2 = readSwitch('monotone') ? textColor1 : '#D9D9D9';
   fillToggle = document.getElementById('fill').value > 50;
   letter = document.getElementById('display-text').value;
-  showGrid = readSwitch('show-grid');
   outline = readSwitch('outline');
   const text = document.getElementById('display-text').value;
   fontSize = text.length == 2 ? 260 : 450;

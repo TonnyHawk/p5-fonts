@@ -192,3 +192,7 @@ a:hover {
 .switch.is-active::after {
   background-color: black;
 }
+
+.footnote {
+  margin-top: 55px;
+}
