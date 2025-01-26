@@ -21,6 +21,19 @@ function preload() {
   dm = loadFont('/fonts/EdwardianScriptITC.ttf'); // Schriftart laden
 }
 
+// Function to filter the points dynamically
+function filterPoints(points, ratio) {
+  console.log(randNum);
+  // Randomly pick a subset of points based on the ratio
+  let filtered = [];
+  for (let pt of points) {
+    if (randNum < ratio) {
+      filtered.push(pt);
+    }
+  }
+  return filtered;
+}
+
 function getCanvasAdaptiveWidth() {
   let sizeMult = 1.3;
   let maxHeight = windowHeight * 0.9;
@@ -93,9 +106,9 @@ function setup() {
   textFont('Helvetica'); // Setzen der Standard-Schriftart
   textSize(200); // Schriftgröße für den Text
 
-  points = getLetterPoints(0.05 / grid_space);
-  minPointsDistance = findMinimalDistance(points);
-  console.log(minPointsDistance);
+  // points = getLetterPoints();
+  // minPointsDistance = findMinimalDistance(points);
+  // console.log(minPointsDistance);
 }
 
 let textColor1, textColor2, fillValue;
@@ -123,7 +136,8 @@ function draw() {
 
   // Buchstabenpunkte aktualisieren
   points = getLetterPoints();
-  points = filterClosePoints(points);
+  // points = filterClosePoints(points);
+  points = filterPoints(points, grid_space);
   // points = points.slice(0, 4);
 
   drawGrid(innerRadius, isFilled, pixelSize, numCorners);
@@ -144,7 +158,7 @@ function initializeGrid(cols, rows) {
 }
 
 // Buchstabenpunkte extrahieren
-function getLetterPoints(density = 0.05) {
+function getLetterPoints() {
   return dm.textToPoints(letter, 0, 0, fontSize, {
     sampleFactor: 0.05, // Steuerung der Punktdichte
     simplifyThreshold: 0, // Keine Vereinfachung
@@ -170,23 +184,15 @@ function getBounds(points) {
 function drawGrid(innerRadius, isFilled, pixelSize, numCorners) {
   // Calculate bounding box
   let bounds = getBounds(points);
-  const spacingMultiplier = grid_space;
-
-  let scaledBounds = {
-    x: bounds.x * spacingMultiplier,
-    y: bounds.y * spacingMultiplier,
-    w: bounds.w * spacingMultiplier,
-    h: bounds.h * spacingMultiplier,
-  };
 
   // Calculate the center offset
-  let centerX = width / 2 - scaledBounds.w / 2;
-  let centerY = height / 2 - scaledBounds.h / 2; // +bounds.h/2 because text y grows downward
+  let centerX = width / 2 - bounds.w / 2;
+  let centerY = height / 2 - bounds.h / 2; // +bounds.h/2 because text y grows downward
 
   // Adjust points to be centered
   points.forEach((p, index) => {
-    let adjustedX = centerX + (p.x - bounds.x) * spacingMultiplier;
-    let adjustedY = centerY + (p.y - bounds.y) * spacingMultiplier;
+    let adjustedX = centerX + (p.x - bounds.x);
+    let adjustedY = centerY + (p.y - bounds.y);
 
     // if (col >= 0 && col < cols && row >= 0 && row < rows) {
     if (fillToggle) {
