@@ -23,11 +23,12 @@ function preload() {
 
 // Function to filter the points dynamically
 function filterPoints(points, ratio) {
+  randomSeed(1);
   console.log(randNum);
   // Randomly pick a subset of points based on the ratio
   let filtered = [];
   for (let pt of points) {
-    if (randNum < ratio) {
+    if (random() < ratio) {
       filtered.push(pt);
     }
   }
