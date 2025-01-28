@@ -10,7 +10,6 @@ const defaultBackground = '#849495';
 // Regler
 let fillToggle, outline, monotone;
 const gridShapeSlider = document.getElementById('cornersCount');
-const gridSizeSlider = document.getElementById('gridSize');
 const pixelSizeSlider = document.getElementById('pixelSize');
 const innerRadiusSlider = document.getElementById('innerRadius');
 
@@ -129,7 +128,6 @@ function draw() {
   fill(255);
 
   // Werte von den Reglern auslesen
-  grid_space = gridSizeSlider.value;
   let innerRadius = innerRadiusSlider.value;
   let pixelSize = pixelSizeSlider.value;
   let numCorners = gridShapeSlider.value;
@@ -138,7 +136,7 @@ function draw() {
   // Buchstabenpunkte aktualisieren
   points = getLetterPoints();
   // points = filterClosePoints(points);
-  points = filterPoints(points, grid_space);
+  // points = filterPoints(points, grid_space);
   // points = points.slice(0, 4);
 
   drawGrid(innerRadius, isFilled, pixelSize, numCorners);
