@@ -116,7 +116,7 @@ a:hover {
   cursor: pointer;
 }
 .button.is-active {
-  background-color: lightgreen;
+  background-color: #f5efdd;
 }
 
 .print {

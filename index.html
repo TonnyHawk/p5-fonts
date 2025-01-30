@@ -1,6 +1,7 @@
 <head>
   <link rel="stylesheet" href="./fonts/stylesheet.css" />
   <link rel="stylesheet" type="text/css" href="style.css" />
+  <meta charset="UTF-8" />
 </head>
 <body>
   <main id="tool-layout">
@@ -30,7 +31,7 @@
       />
       <div class="control">
         <div class="control-header">
-          <p class="control-name">Pixel size</p>
+          <p class="control-name">Nährstoffbedarf</p>
           <p class="control-value">50%</p>
         </div>
         <!-- <div class="control-range">
@@ -47,7 +48,7 @@
       </div>
       <div class="control">
         <div class="control-header">
-          <p class="control-name">inner Radius</p>
+          <p class="control-name">Aktivitätslevel</p>
           <p class="control-value">50%</p>
         </div>
         <!-- <div class="control-range">
@@ -64,7 +65,7 @@
       </div>
       <div class="control">
         <div class="control-header">
-          <p class="control-name">Count</p>
+          <p class="control-name">Stressbalance</p>
           <p class="control-value">50%</p>
         </div>
         <!-- <div class="control-range">
@@ -74,7 +75,7 @@
       </div>
       <div class="control">
         <div class="control-header">
-          <p class="control-name">Fill</p>
+          <p class="control-name">Energielevel</p>
           <p class="control-value">50%</p>
         </div>
         <!-- <div class="control-range">
@@ -87,11 +88,12 @@
           <p class="control-name">Hintergrund</p>
         </div>
         <div class="buttons" id="background-buttons">
-          <p class="button" data-color="#F5EFDD">Farbe 1</p>
+          <p class="button is-active" data-color="#F5EFDD">Farbe 1</p>
           <p class="button" data-color="#9DB8D6">Farbe 2</p>
           <p class="button" data-color="#EAE882">Farbe 3</p>
           <p class="button" data-color="#F1CBE1">Farbe 4</p>
           <p class="button" data-color="#E84E26">Farbe 5</p>
+          <p class="button" data-color="#FFFFFF">Farbe 6</p>
         </div>
       </div>
       <div class="control">
@@ -114,15 +116,15 @@
       </div> -->
       <div class="control">
         <div class="control-header">
-          <p class="control-name">Outline (<span>On</span>)</p>
+          <p class="control-name">Outline (<span>Off</span>)</p>
         </div>
-        <div class="switch is-active" id="outline"></div>
+        <div class="switch" id="outline"></div>
       </div>
       <div class="control">
         <div class="control-header">
-          <p class="control-name">Monotone (<span>Off</span>)</p>
+          <p class="control-name">Monotone (<span>On</span>)</p>
         </div>
-        <div class="switch" id="monotone"></div>
+        <div class="switch is-active" id="monotone"></div>
       </div>
       <div class="print">
         <p class="print-button button" id="print-btn">Print</p>
